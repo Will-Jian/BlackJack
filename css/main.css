@@ -103,15 +103,23 @@
 }
 
 #wager{
+    display: flex;
+    flex-direction: column;
     grid-column-start: 3;
     grid-row-start: 7;
     grid-row-end: 9;
     justify-self: center;
     align-self: center;
+   
+
 }
 
-#wageramount{
-    display: grid;
-    align-self: center;
-    justify-self: center;
+input[type='number']{
+width: 6vmin;
+display: flex;
+justify-content: center;
+align-items: center;
+
 }
+
+splitdealerhand
