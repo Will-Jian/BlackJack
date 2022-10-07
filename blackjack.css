@@ -1,0 +1,115 @@
+html, body, #wrapper {
+    width: 100%;
+    min-height: 100%;
+}
+
+   body{ margin: 0;
+    font-family: Helvetica;
+    height: 850px;
+    width: 1100px;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-rows: 30px 1fr 30px;
+     }
+
+#board {
+    display: grid;
+    justify-self: center;
+    align-self: center;
+    border-radius: 35px;
+    border: 25px solid rgb(159, 103, 14);
+    background-color: green;
+    grid-column-start:2 ;
+    grid-row-start: 2;
+    grid-row-end: 3;
+
+    grid-template-columns: 150px 650px 150px;
+    grid-template-rows: 25px 140px 25px 150px 25px 80px 25px 150px 25px 140px 25px;
+    
+    }
+    
+
+
+#buttons {
+    display: grid;
+    grid-column-start: 2;
+    grid-row-start: 11;
+    grid-template-columns: 2fr 2fr;
+    }
+
+#hitbutton{
+    background-color:darkolivegreen;
+    border-radius: 5px;
+    width: 50%;
+    justify-self: center;
+}
+
+#standbutton{
+    background-color:darkolivegreen;
+    border-radius: 5px;
+    width: 50%;
+    justify-self: center;
+}
+#startbutton{
+    
+    grid-column-start: 2;
+    grid-row-start: 6;
+    justify-self: center;
+    align-self: center;
+}
+
+#playerhand{
+  
+    grid-column-start: 2;
+    grid-row-start: 7;
+    grid-row-end: 9;
+    justify-self: center;
+    align-self: center;
+}
+#dealerhand {
+
+    grid-column-start: 2;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    justify-self: center;
+    align-self: center;
+}
+
+#shuffleddeck{
+    border-radius: 5px;
+    grid-column-start: 1;
+    grid-row-start: 5;
+    grid-row-end: 8;
+    justify-self: center;
+    align-self: center;
+    background-color: darkgreen;
+    height: 90%;
+    width: 55%;
+}
+
+#useddeck{
+    border-radius: 5px;
+    grid-column-start: 3;
+    grid-row-start: 5;
+    grid-row-end: 8;
+    justify-self: center;
+    align-self: center;
+    background-color: darkgreen;
+    height: 90%;
+    width: 55%;
+    
+}
+
+#wager{
+    grid-column-start: 3;
+    grid-row-start: 7;
+    grid-row-end: 9;
+    justify-self: center;
+    align-self: center;
+}
+
+#wageramount{
+    display: grid;
+    align-self: center;
+    justify-self: center;
+}
