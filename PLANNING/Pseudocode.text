@@ -22,7 +22,7 @@ Arr of obj *
 
 	2.4) player hand variable and dealer hand variable to store the points of the cards being dealt. 
 
-
+	2.5) something
 
 3) Store elements on the page that will be accessed in code more than once in variables to make code more concise, readable and performant.
 
