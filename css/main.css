@@ -61,20 +61,26 @@
 }
 
 #playerhand{
-  
     grid-column-start: 2;
-    grid-row-start: 7;
+    grid-row-start: 8;
     grid-row-end: 9;
-    justify-self: center;
-    align-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+   
 }
-#dealerhand {
 
+
+#phand0, #phand1, #phand2, #phand3, #phand4  {
+    width:9vmin;
+    height: 15vmin;
+}
+
+#dealerhand {
     grid-column-start: 2;
     grid-row-start: 3;
     grid-row-end: 5;
-    justify-self: center;
-    align-self: center;
+    
 }
 
 #shuffleddeck{
@@ -85,8 +91,8 @@
     justify-self: center;
     align-self: center;
     background-color: darkgreen;
-    height: 90%;
-    width: 55%;
+    height: 15vmin;
+    width: 9vmin;
 }
 
 #useddeck{
@@ -97,8 +103,8 @@
     justify-self: center;
     align-self: center;
     background-color: darkgreen;
-    height: 90%;
-    width: 55%;
+    height: 15vmin;
+    width: 9vmin;
     
 }
 
