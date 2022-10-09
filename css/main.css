@@ -6,7 +6,7 @@
     }
 }
 
-   body{ margin: 0;
+body{ margin: 0;
     font-family: Helvetica;
 
     display: grid;
@@ -31,8 +31,8 @@
     }
     
 
-
-#buttons {
+/* #buttons is only for hit button and stand button */ 
+#buttons { 
     display: grid;
     grid-column-start: 2;
     grid-row-start: 11;
@@ -53,14 +53,13 @@
     justify-self: center;
 }
 #startbutton{
-    
     grid-column-start: 2;
     grid-row-start: 6;
     justify-self: center;
     align-self: center;
 }
 
-#playerhand{
+#playerHand{
     grid-column-start: 2;
     grid-row-start: 8;
     grid-row-end: 9;
@@ -69,20 +68,22 @@
     justify-content: space-evenly;
    
 }
-
-
-#phand0, #phand1, #phand2, #phand3, #phand4  {
+#dealerHand{
+    grid-column-start: 2;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+   
+}
+/*make sure cards are the same layout throughout the game */ 
+#phand0, #phand1, #phand2, #phand3, #phand4 , #dhand0, #dhand1, #dhand2, #dhand3, #dhand4 {
     width:9vmin;
     height: 15vmin;
 }
 
-#dealerhand {
-    grid-column-start: 2;
-    grid-row-start: 3;
-    grid-row-end: 5;
-    
-}
-
+/* try to do animation where cards move from the shuffled deck to hands as its dealt */ 
 #shuffleddeck{
     border-radius: 5px;
     grid-column-start: 1;
@@ -94,7 +95,7 @@
     height: 15vmin;
     width: 9vmin;
 }
-
+/* try to do animation where the cards move from the hands to the used deck */ 
 #useddeck{
     border-radius: 5px;
     grid-column-start: 3;
@@ -121,7 +122,7 @@
 }
 
 input[type='number']{
-width: 6vmin;
+width: 10vmin;
 display: flex;
 justify-content: center;
 align-items: center;

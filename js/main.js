@@ -15,7 +15,7 @@
   
 
    // 1.4) How much wager they start out with  total amount of chips 
-  const pot = 1000
+  const pot = [1000]
 
   /*----- state variables -----*/
 let winner;
@@ -26,18 +26,23 @@ let shuffledDeck;
   /*----- cached elements */ 
 const messageEl = document.querySelector('h1')
 const startButton = document.getElementById('startbutton')
+const hitButton = document.getElementById('hitButton')
+const standButton = document.getElementById('standButton')
   /*----- event listeners -----*/
 startButton.addEventListener('click',start);
+hitButton.addEventListener('click',hitFunc)
+standButton.addEventListener('click',standFunc)
 
   /*----- functions -----*/
-  init()
+    init()
 
-    function init(){
+
+
+  function init(){
       dealerHand = [null,null,null,null,null]
       playerHand = [null,null,null,null,null]
       winner = null
       createDeck()
-      
       render()
 
   }
@@ -59,14 +64,49 @@ startButton.addEventListener('click',start);
     })
   }
 
-    function render(){
-   renderPlayerHand()
-   renderDealerHand()
-   
+
+  function renderDealerHand(){
+    dealerHand.forEach(function(cellVal, cellidx){
+      console.log(cellVal,cellidx)
+      const playerhandEl =document.getElementById(`dhand${cellidx}`)
+      playerhandEl.style.backgroundColor = COLORS[cellVal];
+    })
+  }
+
+// 
+  function renderWagerBank(){
+  
+      console.log(cellVal,cellidx)
+      const wageBankEl =document.getElementById('wageBank');
+      wageBankEl.innerText 
+    
   }
 
 
-    function start(){
+
+  function render(){
+    renderPlayerHand()
+    renderDealerHand()
+  
+  }
+
+
+  function dealCard(){
+    playerHand[0] = deck.shift();
+    dealerHand[0] = deck.shift();
+    playerHand[1] = deck.shift();
+    dealerHand[1] = deck.shift();
+  }
+
+  function start(){
     console.log("hi");
  
+  }
+
+  function hitFunc(){
+    console.log("hit")
+  }
+
+  function standFunc(){
+    console.log("stand")
   }
