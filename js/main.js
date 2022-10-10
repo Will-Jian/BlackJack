@@ -1,15 +1,9 @@
   /*----- constants -----*/
   //1.1) define the cards deck with 4 different suits and the cards within each suit.  (Spades,hearts,clover,diamonds)(Ace through king) 
   //Arr of obj 
-  const deck = [ ]
-  const suits = [ "Spades","Diamonds","Club","Heart"]
-  const rank = [ "Ace",'2','3','4','5','6','7','8','9','10','Jack','Queen','King']
-
-  const COLORS = {
-    'null': 'white',
-    '1':'Yellow',
-    '-1' : 'Purple'
-  }
+  const originalDeck = [ ]
+  const suits = [ "s","d","c","h"]
+  const rank = [ '02','03','04','05','06','07','08','09','10','J','Q','K','A']
   
     // 1.3) define the winning conditions- if  player reaches 21 stop and wait for dealer or if the dealer reaches 21 stop and let dealer win. If both are 21 it is a tie. 
   
@@ -39,9 +33,10 @@ standButton.addEventListener('click',standFunc)
 
 
   function init(){
-      dealerHand = [null,null,null,null,null]
-      playerHand = [null,null,null,null,null]
-      winner = null
+      dealerHand = []
+      playerHand = []
+      playerTotal = 0
+      dealerTotal = 0
       createDeck()
       render()
 
@@ -50,41 +45,57 @@ standButton.addEventListener('click',standFunc)
   function createDeck(){
     for (let i=0; i < suits.length; i++){     //iterate over ranks while iterating over the suits to create card
       for (let j=0; j<rank.length; j++) {
-        let card = {Rank: rank[j], Suit: suits[i]};
-        deck.push(card);
-      }
+        let card = {face: `${suits[i]}${rank[j]}`, value: Number(rank[j]) || (rank === 'A' ? 11:10)}
+        originalDeck.push(card);
+      
     }
   }
+  }
+  function buildShuffledDeck(){
+    const tempDeck = [...originalDeck];
+    const newShuffledDeck = [];
+    for (let i = 0; i <originalDeck.length; i++){
+      const randomIdx = Math.floor(Math.random()*tempDeck.length);
+      newShuffledDeck.push(tempDeck.splice(randomIdx, 1)[0])
+    }
+return newShuffledDeck;
+  }
+
+
+//renders to container 
+  function renderDeckInContainer(anyDeck,container){
+    container.innerHTML = '';
+    let cardsHtml = '';
+    anyDeck.forEach(function(card){
+    cardsHtml += ` <div class="card ${card.face}"></div>`
+});
+    container.innerHTML = cardsHtml;
+}
+
+
+  function renderNewShuffledDeck(){
+    shuffledDeck = buildShuffledDeck();
+    //renderDeckInContainer(shuffledDeck,document.getElementById('shuffleddeck'))
+}
 
   function renderPlayerHand(){
-    playerHand.forEach(function(cellVal, cellidx){
-      console.log(cellVal,cellidx)
-      const playerhandEl =document.getElementById(`phand${cellidx}`)
-      playerhandEl.style.backgroundColor = COLORS[cellVal];
-    })
+    renderDeckInContainer(playerHand, document.getElementById('playerHand'))
   }
-
-
   function renderDealerHand(){
-    dealerHand.forEach(function(cellVal, cellidx){
-      console.log(cellVal,cellidx)
-      const playerhandEl =document.getElementById(`dhand${cellidx}`)
-      playerhandEl.style.backgroundColor = COLORS[cellVal];
-    })
+    renderDeckInContainer(dealerHand, document.getElementById('dealerHand'))
   }
 
-// 
+ 
+
+/* 
   function renderWagerBank(){
-  
-      console.log(cellVal,cellidx)
-      const wageBankEl =document.getElementById('wageBank');
-      wageBankEl.innerText 
-    
+    console.log("render wage")
   }
 
-
+*/
 
   function render(){
+    renderNewShuffledDeck()
     renderPlayerHand()
     renderDealerHand()
   
@@ -92,21 +103,32 @@ standButton.addEventListener('click',standFunc)
 
 
   function dealCard(){
-    playerHand[0] = deck.shift();
-    dealerHand[0] = deck.shift();
-    playerHand[1] = deck.shift();
-    dealerHand[1] = deck.shift();
+    playerHand = []
+    dealerHand = []
+    playerHand[0] = shuffledDeck.shift();
+    dealerHand[0] = shuffledDeck.shift();
+    playerHand[1] = shuffledDeck.shift();
+    dealerHand[1] = shuffledDeck.shift();
+    render()
   }
 
   function start(){
-    console.log("hi");
- 
+    dealCard() 
   }
 
   function hitFunc(){
-    console.log("hit")
-  }
+    // check if value is 21 or over 
+    if (playerHand[0] && playerHand[1] !== undefined)
+    playerHand.push(shuffledDeck.shift());
+    render()
+  
+}
 
   function standFunc(){
     console.log("stand")
+    // caculate the total value of cards 
+    //upon stand move over to dealer functions to run hit/stand 
   }
+  
+
+  //renderDeckInContainer(shuffledDeck,document.getElementById('useddeck')
