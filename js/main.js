@@ -9,7 +9,7 @@
   
 
    // 1.4) How much wager they start out with  total amount of chips 
-  const pot = [1000]
+  const pot = 1000
 
   /*----- state variables -----*/
 let winner;
@@ -34,15 +34,19 @@ standButton.addEventListener('click',standFunc)
 
 
   function init(){
-      
+      startButton.style.visibility = "visible"
+      hitButton.style.visibility = "hidden" 
+      standButton.style.visibility = "hidden"  
+
+      document.getElementById("wageBank").innerHTML = pot
       dealerHand = []
       playerHand = []
       playerPoints = 0
       dealerPoints = 0
       createDeck()
       renderNewShuffledDeck()
-      start()
-      render()
+     // start()
+    
      
   }
 
@@ -108,6 +112,7 @@ standButton.addEventListener('click',standFunc)
 
 
   function start(){
+    if (document.getElementById('wageamount').value !== ''){
     winner = null;
     playerHand = []
     dealerHand = []
@@ -119,9 +124,11 @@ standButton.addEventListener('click',standFunc)
     dealerPoints = checkHandScore(dealerHand);
     winner = checkWinner()
     render()
+  } else {
+    messageEl.innerHTML = "forgot to place bet!"
   }
 
- 
+}
 
   
 
