@@ -131,9 +131,8 @@ align-items: center;
 
 
 #message {
-    display: none;
     grid-column-start: 2;
-    grid-row-start: 6;
+    grid-row-start: 7;
     justify-self: center;
     align-self: center;
 }

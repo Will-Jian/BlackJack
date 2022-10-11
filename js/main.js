@@ -34,14 +34,16 @@ standButton.addEventListener('click',standFunc)
 
 
   function init(){
+      
       dealerHand = []
       playerHand = []
       playerPoints = 0
       dealerPoints = 0
       createDeck()
       renderNewShuffledDeck()
+      start()
       render()
-
+     
   }
 
   function createDeck(){
@@ -59,8 +61,8 @@ standButton.addEventListener('click',standFunc)
     for (let i = 0; i <originalDeck.length; i++){
       const randomIdx = Math.floor(Math.random()*tempDeck.length);
       newShuffledDeck.push(tempDeck.splice(randomIdx, 1)[0])
-    }
-return newShuffledDeck;
+    }  
+      return newShuffledDeck;
   }
 
 
@@ -70,16 +72,16 @@ return newShuffledDeck;
     let cardsHtml = '';
     anyDeck.forEach(function(card){
     cardsHtml += ` <div class="card ${card.face}"></div>`
-});
+    });
     container.innerHTML = cardsHtml;
-}
+  }
 
 
   function renderNewShuffledDeck(){
     shuffledDeck = buildShuffledDeck();
     
     //renderDeckInContainer(shuffledDeck,document.getElementById('shuffleddeck'))
-}
+  }
 
   function renderPlayerHand(){
     renderDeckInContainer(playerHand, document.getElementById('playerHand'))
@@ -98,14 +100,15 @@ return newShuffledDeck;
 */
 
   function render(){
-    
-    renderPlayerHand()
-    renderDealerHand()
-  
+    renderButtons()
+    renderPlayerHand();
+    renderDealerHand();
+    renderMessage();
   }
 
 
   function start(){
+    winner = null;
     playerHand = []
     dealerHand = []
     playerHand[0] = shuffledDeck.shift();
@@ -114,12 +117,7 @@ return newShuffledDeck;
     dealerHand[1] = shuffledDeck.shift();
     playerPoints = checkHandScore(playerHand);
     dealerPoints = checkHandScore(dealerHand);
-    if (playerPoints === 21){
-      console.log ("player wins")
-    } else if (dealerPoints === 21){
-      console.log('dealerWins')
-    }
-   console.log( playerPoints,dealerPoints)
+    winner = checkWinner()
     render()
   }
 
@@ -145,59 +143,62 @@ return totalScore;
 
 
 function hitFunc(){
-  // check if value is 21 or over 
-  if ( playerPoints >= 21){return}
-  if ( dealerPoints === 21){return}
-  if (playerHand[0] && playerHand[1] !== undefined)
- { playerHand.push(shuffledDeck.shift())}
- 
+  playerHand.push(shuffledDeck.shift())
   playerPoints = checkHandScore(playerHand);
-
-  if ( playerPoints  > 21 ){
-    // winner = dealer
-    console.log("oh no you lost")
-  } 
-    
-   
-  render()   
-
-  if (playerPoints === 21){
-    console.log ("player wins")
-  } else if (dealerPoints === 21){
-    console.log('dealerWins')
-  }
+  winner = checkWinner();
+  render()
 }
 
 
-  function standFunc(){
-    if ( playerPoints >= 21){return}
-    if ( dealerPoints === 21){return}
-if ( dealerPoints <= 15 && playerHand[0] !== undefined && playerHand[1] !== undefined) {
-  dealerHand.push(shuffledDeck.shift())}
+function standFunc(){
+    while (dealerPoints <= 15) {
+    dealerHand.push(shuffledDeck.shift())
+    dealerPoints = checkHandScore(dealerHand)
+  }
+     playerPoints = checkHandScore(playerHand);
+    if (dealerPoints === playerPoints) {
+      winner = "dealer"
+    } else {
+      winner = checkWinner()
+    }
 
-dealerPoints = checkHandScore(dealerHand);
-if ( dealerPoints  > 21 ){ 
-  // winner = dealer
-  console.log("oh yay dealer lost")
-} 
-render()
-
-winner = checkWinner()
-    // caculate the total value of cards 
-    //upon stand move over to dealer functions to run hit/stand 
+    render()
   }
   
 
 function checkWinner(){
-  if (playerPoints === dealerPoints){
-    winner = "tie"
-  } else if (playerPoints> dealerPoints){
-    winner = "player"
-  } else {
-    winner = "dealer"
+  if ( playerPoints  > 21 ){
+    return "dealer"
+  }  else if (dealerPoints > 21){
+    return "player"
+  } else if (playerPoints === 21 && dealerPoints === 21){
+    return "tie"
+  } else if ( playerPoints === 21){
+    return "player"
+  } else if ( dealerPoints === 21){
+    return "dealer"
   }
-  return winner
+
 }
 
 
 
+
+function renderMessage(){
+// if winner is true display message 
+    if (winner === "player") {
+      messageEl.innerHTML = "Player Won"
+    } else if ( winner === "dealer"){
+      messageEl.innerHTML = "Dealer Won"
+    } else if (winner === "tie") {
+      messageEl.innerHTML = "TIE"
+    } else {
+      messageEl.innerHTML = ""
+    }
+}
+
+function renderButtons() {
+  winner ? startButton.style.visibility = "visible" : startButton.style.visibility = "hidden"
+  winner ? hitButton.style.visibility = "hidden" : hitButton.style.visibility = "visible"
+  winner ? standButton.style.visibility = "hidden" : standButton.style.visibility = "visible"
+}
