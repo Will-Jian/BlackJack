@@ -16,6 +16,8 @@ let winner;
 let dealerHand;
 let playerHand;
 let shuffledDeck; 
+let playerPoints = 0;
+let dealerPoints = 0;
 
   /*----- cached elements */ 
 const messageEl = document.querySelector('h1')
@@ -45,7 +47,7 @@ standButton.addEventListener('click',standFunc)
   function createDeck(){
     for (let i=0; i < suits.length; i++){     //iterate over ranks while iterating over the suits to create card
       for (let j=0; j<rank.length; j++) {
-        let card = {face: `${suits[i]}${rank[j]}`, value: Number(rank[j]) || (rank === 'A' ? 11:10)}
+        let card = {face: `${suits[i]}${rank[j]}`, value: Number(rank[j]) || (rank[j] === 'A' ? 11 : 10)}
         originalDeck.push(card);
       
     }
@@ -102,27 +104,52 @@ return newShuffledDeck;
   }
 
 
-  function dealCard(){
+  function start(){
     playerHand = []
     dealerHand = []
     playerHand[0] = shuffledDeck.shift();
     dealerHand[0] = shuffledDeck.shift();
     playerHand[1] = shuffledDeck.shift();
     dealerHand[1] = shuffledDeck.shift();
+    playerPoints = checkHandScore(playerHand);
+    dealerPoints = checkHandScore(dealerHand);
+   console.log( playerPoints,dealerPoints)
     render()
   }
 
-  function start(){
-    dealCard() 
-  }
+ 
 
   function hitFunc(){
     // check if value is 21 or over 
     if (playerHand[0] && playerHand[1] !== undefined)
     playerHand.push(shuffledDeck.shift());
-    render()
-  
+    render()  
 }
+
+
+function checkHandScore(hand){
+  let totalScore =0
+  let totalAce =0
+  hand.forEach(function addValue(obj) {
+    console.log(obj.value,"add value") 
+    totalScore += obj.value
+  })
+//  if (obj.value === 11){
+//   totalAce +=1
+//  } else {
+//   totalScore += obj.value
+//  }
+/*while (totalScore > 21 && totalAce >0){
+  totalScore -=10
+  totalAce -=1
+} 
+*/
+return totalScore;
+}
+
+
+ 
+
 
   function standFunc(){
     console.log("stand")
