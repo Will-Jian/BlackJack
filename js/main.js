@@ -16,14 +16,13 @@ let winner;
 let dealerHand;
 let playerHand;
 let shuffledDeck; 
-let playerPoints = 0;
-let dealerPoints = 0;
+
 
   /*----- cached elements */ 
-const messageEl = document.querySelector('h1')
 const startButton = document.getElementById('startbutton')
 const hitButton = document.getElementById('hitButton')
 const standButton = document.getElementById('standButton')
+const messageEl = document.getElementById('message')
   /*----- event listeners -----*/
 startButton.addEventListener('click',start);
 hitButton.addEventListener('click',hitFunc)
@@ -37,9 +36,10 @@ standButton.addEventListener('click',standFunc)
   function init(){
       dealerHand = []
       playerHand = []
-      playerTotal = 0
-      dealerTotal = 0
+      playerPoints = 0
+      dealerPoints = 0
       createDeck()
+      renderNewShuffledDeck()
       render()
 
   }
@@ -77,6 +77,7 @@ return newShuffledDeck;
 
   function renderNewShuffledDeck(){
     shuffledDeck = buildShuffledDeck();
+    
     //renderDeckInContainer(shuffledDeck,document.getElementById('shuffleddeck'))
 }
 
@@ -97,7 +98,7 @@ return newShuffledDeck;
 */
 
   function render(){
-    renderNewShuffledDeck()
+    
     renderPlayerHand()
     renderDealerHand()
   
@@ -113,49 +114,90 @@ return newShuffledDeck;
     dealerHand[1] = shuffledDeck.shift();
     playerPoints = checkHandScore(playerHand);
     dealerPoints = checkHandScore(dealerHand);
+    if (playerPoints === 21){
+      console.log ("player wins")
+    } else if (dealerPoints === 21){
+      console.log('dealerWins')
+    }
    console.log( playerPoints,dealerPoints)
     render()
   }
 
  
 
-  function hitFunc(){
-    // check if value is 21 or over 
-    if (playerHand[0] && playerHand[1] !== undefined)
-    playerHand.push(shuffledDeck.shift());
-    render()  
-}
+  
 
 
 function checkHandScore(hand){
   let totalScore =0
   let totalAce =0
   hand.forEach(function addValue(obj) {
-    console.log(obj.value,"add value") 
-    totalScore += obj.value
-  })
-//  if (obj.value === 11){
-//   totalAce +=1
-//  } else {
-//   totalScore += obj.value
-//  }
-/*while (totalScore > 21 && totalAce >0){
-  totalScore -=10
-  totalAce -=1
-} 
-*/
+    //console.log(obj.value,"add value") 
+    if (obj.value == 11){totalAce += 1, totalScore+= obj.value} else {totalScore+= obj.value}
+    })
+  while (totalScore > 21 && totalAce > 0) {
+    //console.log( totalScore,totalAce)
+    totalScore-=10
+    totalAce-=1
+}
 return totalScore;
 }
 
 
+function hitFunc(){
+  // check if value is 21 or over 
+  if ( playerPoints >= 21){return}
+  if ( dealerPoints === 21){return}
+  if (playerHand[0] && playerHand[1] !== undefined)
+ { playerHand.push(shuffledDeck.shift())}
  
+  playerPoints = checkHandScore(playerHand);
+
+  if ( playerPoints  > 21 ){
+    // winner = dealer
+    console.log("oh no you lost")
+  } 
+    
+   
+  render()   
+
+  if (playerPoints === 21){
+    console.log ("player wins")
+  } else if (dealerPoints === 21){
+    console.log('dealerWins')
+  }
+}
 
 
   function standFunc(){
-    console.log("stand")
+    if ( playerPoints >= 21){return}
+    if ( dealerPoints === 21){return}
+if ( dealerPoints <= 15 && playerHand[0] !== undefined && playerHand[1] !== undefined) {
+  dealerHand.push(shuffledDeck.shift())}
+
+dealerPoints = checkHandScore(dealerHand);
+if ( dealerPoints  > 21 ){ 
+  // winner = dealer
+  console.log("oh yay dealer lost")
+} 
+render()
+
+winner = checkWinner()
     // caculate the total value of cards 
     //upon stand move over to dealer functions to run hit/stand 
   }
   
 
-  //renderDeckInContainer(shuffledDeck,document.getElementById('useddeck')
+function checkWinner(){
+  if (playerPoints === dealerPoints){
+    winner = "tie"
+  } else if (playerPoints> dealerPoints){
+    winner = "player"
+  } else {
+    winner = "dealer"
+  }
+  return winner
+}
+
+
+
