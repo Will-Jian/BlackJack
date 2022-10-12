@@ -1,15 +1,11 @@
   /*----- constants -----*/
-  //1.1) define the cards deck with 4 different suits and the cards within each suit.  (Spades,hearts,clover,diamonds)(Ace through king) 
-  //Arr of obj 
   const originalDeck = [ ]
   const suits = [ "s","d","c","h"]
   const rank = [ '02','03','04','05','06','07','08','09','10','J','Q','K','A']
   
-    // 1.3) define the winning conditions- if  player reaches 21 stop and wait for dealer or if the dealer reaches 21 stop and let dealer win. If both are 21 it is a tie. 
   
 
-   // 1.4) How much wager they start out with  total amount of chips 
-  const pot = 1000
+  let pot = 1000
 
   /*----- state variables -----*/
 let winner;
@@ -34,11 +30,11 @@ standButton.addEventListener('click',standFunc)
 
 
   function init(){
-      startButton.style.visibility = "visible"
-      hitButton.style.visibility = "hidden" 
-      standButton.style.visibility = "hidden"  
+    startButton.style.visibility = "visible"
+    hitButton.style.visibility = "hidden" 
+    standButton.style.visibility = "hidden"  
 
-      document.getElementById("wageBank").innerHTML = pot
+    document.getElementById("wageBank").innerHTML = pot
       dealerHand = []
       playerHand = []
       playerPoints = 0
@@ -46,10 +42,12 @@ standButton.addEventListener('click',standFunc)
       createDeck()
       renderNewShuffledDeck() 
   }
+
   function createDeck(){
-    for (let i=0; i < suits.length; i++){     //iterate over ranks while iterating over the suits to create card
+    for (let i=0; i < suits.length; i++){     
       for (let j=0; j<rank.length; j++) {
-        let card = {face: `${suits[i]}${rank[j]}`, value: Number(rank[j]) || (rank[j] === 'A' ? 11 : 10)}
+        let card = {face: `${suits[i]}${rank[j]}`, value: Number(rank[j]) || (rank[j] === 'A' ? 11 : 10), backside: "back-side"}
+        console.log(card)
         originalDeck.push(card);  
       }
     }
@@ -66,22 +64,53 @@ standButton.addEventListener('click',standFunc)
   }
 
 
-//renders to container 
   function renderDeckInContainer(anyDeck,container){
     container.innerHTML = '';
     let cardsHtml = '';
-    anyDeck.forEach(function(card){
-    cardsHtml += ` <div class="card ${card.face}"></div>`
-    });
-    container.innerHTML = cardsHtml;
+    let cardsHtml1 = '';
+    let cardsHtml2 = '';
+    
+
+      for (let i=0; i <1; i++){
+        cardsHtml1 += ` <div class="card ${anyDeck[i].face}"></div>`; 
+        cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
+        cardsHtml += `<div class = "flip-card"> ${cardsHtml1} </div>`;
+    }
+       container.innerHTML += cardsHtml
+
+    for (let i =1; i < anyDeck.length; i++){
+        cardsHtml2 += `<div class="card ${anyDeck[i].face}"></div>`; 
+    }
+    container.innerHTML += cardsHtml2
+
   }
 
+    
+   /*  anyDeck.forEach(function(card){
+    cardsHtml1 = ` <div class="card ${card.face}"></div>`; 
+    //cardsHtml+= `<div class="flip-card-front">${flipCardFront}</div>`
+    cardsHtml2 = ` <div class="card-${card.backside}"></div>`;
+
+    cardsHtml += `<div class = "flip-card"> ${cardsHtml1} ${cardsHtml2}</div>`
+    
+    //container.innerHTML = cardsHtml;
+    });
+    container.innerHTML = cardsHtml;
+    //cardhtml1 += `<div class = "flip-card"> ${cardsHtml}</div>`
+
+   //container.innerHTML = cardhtml1;
+  }
+*/
 
   function renderNewShuffledDeck(){
     shuffledDeck = buildShuffledDeck();
-    
-    //renderDeckInContainer(shuffledDeck,document.getElementById('shuffleddeck'))
   }
+  function reshuffleDeck(){
+    if (shuffledDeck = [])
+    shuffledDeck = buildShuffledDeck();
+  }
+    
+  
 
   function renderPlayerHand(){
     renderDeckInContainer(playerHand, document.getElementById('playerHand'))
@@ -92,36 +121,35 @@ standButton.addEventListener('click',standFunc)
 
  
 
-/* 
-  function renderWagerBank(){
-    console.log("render wage")
-  }
 
-*/
 
   function render(){
-    renderButtons()
+    renderButtons();
     renderPlayerHand();
     renderDealerHand();
     renderMessage();
+    reshuffleDeck();
+    
   }
 
 
   function start(){
-    if (document.getElementById('wageamount').value !== ''){
-    winner = null;
-    playerHand = []
-    dealerHand = []
-    playerHand[0] = shuffledDeck.shift();
-    dealerHand[0] = shuffledDeck.shift();
-    playerHand[1] = shuffledDeck.shift();
-    dealerHand[1] = shuffledDeck.shift();
-    playerPoints = checkHandScore(playerHand);
-    dealerPoints = checkHandScore(dealerHand);
-    winner = checkWinner()
-    render()
+    if (document.getElementById('wageamount').value !== '' && document.getElementById('wageamount').value < pot){
+      winner = null;
+      playerHand = []
+      dealerHand = []
+      playerHand[0] = shuffledDeck.shift();
+      dealerHand[0] = shuffledDeck.shift();
+      playerHand[1] = shuffledDeck.shift();
+      dealerHand[1] = shuffledDeck.shift();
+      playerPoints = checkHandScore(playerHand);
+      dealerPoints = checkHandScore(dealerHand);
+      winner = checkWinner()
+      render()
+  } else if (document.getElementById('wageamount').value > pot && document.getElementById('wageamount').value !== '') {
+      messageEl.innerHTML = "not enough money!"
   } else {
-    messageEl.innerHTML = "forgot to place bet!"
+      messageEl.innerHTML = "forgot to place bet!"
   }
 
 }
@@ -133,14 +161,12 @@ function checkHandScore(hand){
   let totalScore =0
   let totalAce =0
   hand.forEach(function addValue(obj) {
-    //console.log(obj.value,"add value") 
     if (obj.value == 11){totalAce += 1, totalScore+= obj.value} else {totalScore+= obj.value}
     })
   while (totalScore > 21 && totalAce > 0) {
-    //console.log( totalScore,totalAce)
     totalScore-=10
     totalAce-=1
-}
+  }
 return totalScore;
 }
 
@@ -154,41 +180,59 @@ function hitFunc(){
 
 
 function standFunc(){
-    while (dealerPoints <= 15) {
-    dealerHand.push(shuffledDeck.shift())
-    dealerPoints = checkHandScore(dealerHand)
-  }
-     playerPoints = checkHandScore(playerHand);
-    if (dealerPoints === playerPoints) {
-      winner = "dealer"
-    } else {
-      winner = checkWinner()
+    while (dealerPoints <= 15 && dealerPoints < playerPoints)  {
+      dealerHand.push(shuffledDeck.shift())
+      dealerPoints = checkHandScore(dealerHand)
     }
-
-    render()
+    playerPoints = checkHandScore(playerHand);
+       if (checkWinner() === undefined){
+        winner = checkWinnerStand()
+      } 
+        else {
+        winner = checkWinner()
+      }
+      render()
   }
   
 
 function checkWinner(){
   if ( playerPoints  > 21 ){
+    pot = pot - (document.getElementById('wageamount').value)
+    document.getElementById("wageBank").innerHTML = pot
     return "dealer"
   }  else if (dealerPoints > 21){
+    pot = pot += ((document.getElementById('wageamount').value)*2)
+    document.getElementById("wageBank").innerHTML = pot
     return "player"
   } else if (playerPoints === 21 && dealerPoints === 21){
+    pot = pot - 0 
     return "tie"
   } else if ( playerPoints === 21){
+    pot = pot += ((document.getElementById('wageamount').value)*2)
+    document.getElementById("wageBank").innerHTML = pot
     return "player"
   } else if ( dealerPoints === 21){
+    pot = pot - (document.getElementById('wageamount').value)
+    document.getElementById("wageBank").innerHTML = pot
     return "dealer"
-  }
+  } 
 
 }
 
-
+function checkWinnerStand (){
+  if (dealerPoints > playerPoints && dealerPoints < 21){
+    pot = pot - (document.getElementById('wageamount').value)
+    document.getElementById("wageBank").innerHTML = pot
+    return "dealer"
+  } else if (playerPoints > dealerPoints && dealerPoints < 21){
+        pot = pot += ((document.getElementById('wageamount').value)*2)
+        document.getElementById("wageBank").innerHTML = pot
+        return "player"
+  }  
+}
 
 
 function renderMessage(){
-// if winner is true display message 
     if (winner === "player") {
       messageEl.innerHTML = "You Won"
     } else if ( winner === "dealer"){
@@ -205,3 +249,5 @@ function renderButtons() {
   winner ? hitButton.style.visibility = "hidden" : hitButton.style.visibility = "visible"
   winner ? standButton.style.visibility = "hidden" : standButton.style.visibility = "visible"
 }
+
+

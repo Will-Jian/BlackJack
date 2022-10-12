@@ -1,10 +1,6 @@
 
 
-@media all (min-width: 400px){
-    body{
-        background-color: greenyellow
-    }
-}
+
 
 body{ margin: 0;
     font-family: Helvetica;
@@ -12,7 +8,7 @@ body{ margin: 0;
     display: grid;
     grid-template-columns: .5vmin 1fr .5vmin;
     grid-template-rows: 1vmin 1fr 1vmin;
-     }
+}
 
 #board {
     display: grid;
@@ -28,16 +24,18 @@ body{ margin: 0;
     grid-template-columns: 15vmin 60vmin 15vmin;
     grid-template-rows: 3vmin 15vmin 3vmin 15vmin 3vmin 9vmin 3vmin 15vmin 3vmin 15vmin 3vmin 3vmin;
     margin: auto;
-    }
+}
     
+h1 {
+    margin-bottom: 6vmin;
+}
 
-/* #buttons is only for hit button and stand button */ 
 #buttons { 
     display: grid;
     grid-column-start: 2;
     grid-row-start: 11;
     grid-template-columns: 2fr 2fr;
-    }
+}
 
 #hitbutton{
     background-color:darkolivegreen;
@@ -52,6 +50,7 @@ body{ margin: 0;
     width: 50%;
     justify-self: center;
 }
+
 #startbutton{
     grid-column-start: 2;
     grid-row-start: 6;
@@ -66,8 +65,9 @@ body{ margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-   
+    perspective: 1000px;
 }
+
 #dealerHand{
     grid-column-start: 2;
     grid-row-start: 4;
@@ -75,15 +75,13 @@ body{ margin: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-   
 }
-/*make sure cards are the same layout throughout the game */ 
+
 #phand0, #phand1, #phand2, #phand3, #phand4 , #dhand0, #dhand1, #dhand2, #dhand3, #dhand4 {
     width:9vmin;
     height: 15vmin;
 }
-
-/* try to do animation where cards move from the shuffled deck to hands as its dealt */ 
+ 
 #shuffleddeck{
     border-radius: 5px;
     grid-column-start: 1;
@@ -91,11 +89,49 @@ body{ margin: 0;
     grid-row-end: 8;
     justify-self: center;
     align-self: center;
-    background-color: darkgreen;
-    height: 15vmin;
-    width: 9vmin;
+    background-image: url("../css/card-library/images/backs/red.svg");
+    width: 4.0em;
+    height: 5.5em; 
+    background-color: #fff;
+    background-size: contain;
 }
-/* try to do animation where the cards move from the hands to the used deck */ 
+
+.card-back-side{
+    background-image: url("../css/card-library/images/backs/red.svg");
+   
+    width: 4.0em;
+    height: 5.7em;
+    background-color: #fff;
+    border-radius: 0.20em;
+    border: 1px solid #c3c3c3;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#playerHand:hover .flip-card{
+    transform: rotateY(180deg)
+}
+#dealerHand:hover .flip-card{
+    transform: rotateY(180deg)
+}
+
+.flip-card {
+    position: relative;
+    display: flex;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+.card-back-side{
+    transform: rotateY(180deg);
+    position: absolute;
+    backface-visibility: hidden;
+}
+
 #useddeck{
     border-radius: 5px;
     grid-column-start: 3;
@@ -103,30 +139,41 @@ body{ margin: 0;
     grid-row-end: 8;
     justify-self: center;
     align-self: center;
-    background-color: darkgreen;
-    height: 15vmin;
-    width: 9vmin;
-    
+    background-image: url("../css/card-library/images/backs/red.svg");
+    width: 4.0em;
+    height: 5.5em; 
+    background-color: #fff;
+    background-size: contain;
 }
 
 #wager{
     display: flex;
+    font-size: 2vmin;
     flex-direction: column;
     grid-column-start: 3;
     grid-row-start: 7;
     grid-row-end: 9;
     justify-self: center;
     align-self: center;
-   
+    margin-top: 3vmin; 
+    color: white;
+}
 
+#wageBank{
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    color: white;
+    font-size: 3vmin;
+    font-weight: bold;
 }
 
 input[type='number']{
-width: 10vmin;
-display: flex;
-justify-content: center;
-align-items: center;
-
+    width: 11vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2vmin;
 }
 
 

@@ -13,14 +13,29 @@
 <body>
     <section id = "board">   
         
-        <p id="shuffleddeck">Shuffled Deck</p>
-        <p id="useddeck">Used Deck</p>
+    <div id="shuffleddeck">
+            <div class = "flip-card">
+                <div class = "card-front"></div>
+                <div class = "card-back"></div>
+            </div>
+            
+   
+    
+    </div>
+        <p id="useddeck"></p>
         
       <h1 id= "message"> Place your bet </h1>
 
-        <section id= "playerHand"> 
-     
-        </section>
+        <div id= "playerHand"> 
+            <div class = "flip-card">
+               
+        </div>
+        </div>
+
+
+
+
+
 
         <section id= "dealerHand"> 
            
@@ -36,10 +51,10 @@
     
     
 <div id = "wager">
-    <div id = "wageBank"> </div> 
-   wageramount 
-   <form name = "wageForm" action = " " method = "get">
-   <input type ="number" id ="wageamount" name ="wagevalue">
+    <div id = "wageBank"></div> 
+   wage amount 
+   
+   <input type ="number" id ="wageamount" name ="wagevalue" min = "1000">
   
 </form>
 </div>
