@@ -29,7 +29,7 @@ hitButton.addEventListener('click',hitFunc)
 standButton.addEventListener('click',standFunc)
 
   /*----- functions -----*/
-    init()
+  init()
 
 
 
@@ -44,21 +44,17 @@ standButton.addEventListener('click',standFunc)
       playerPoints = 0
       dealerPoints = 0
       createDeck()
-      renderNewShuffledDeck()
-     // start()
-    
-     
+      renderNewShuffledDeck() 
   }
-
   function createDeck(){
     for (let i=0; i < suits.length; i++){     //iterate over ranks while iterating over the suits to create card
       for (let j=0; j<rank.length; j++) {
         let card = {face: `${suits[i]}${rank[j]}`, value: Number(rank[j]) || (rank[j] === 'A' ? 11 : 10)}
-        originalDeck.push(card);
-      
+        originalDeck.push(card);  
+      }
     }
   }
-  }
+
   function buildShuffledDeck(){
     const tempDeck = [...originalDeck];
     const newShuffledDeck = [];
@@ -66,7 +62,7 @@ standButton.addEventListener('click',standFunc)
       const randomIdx = Math.floor(Math.random()*tempDeck.length);
       newShuffledDeck.push(tempDeck.splice(randomIdx, 1)[0])
     }  
-      return newShuffledDeck;
+    return newShuffledDeck;
   }
 
 
@@ -194,7 +190,7 @@ function checkWinner(){
 function renderMessage(){
 // if winner is true display message 
     if (winner === "player") {
-      messageEl.innerHTML = "Player Won"
+      messageEl.innerHTML = "You Won"
     } else if ( winner === "dealer"){
       messageEl.innerHTML = "Dealer Won"
     } else if (winner === "tie") {
