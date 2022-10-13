@@ -26,7 +26,7 @@
 
 body{ margin: 0;
     font-family: Helvetica;
-
+    background-color: darkred;
     display: grid;
     grid-template-columns: .5vmin 1fr .5vmin;
     grid-template-rows: 1vmin 1fr 1vmin;
@@ -45,7 +45,7 @@ body{ margin: 0;
 
     grid-template-columns: 15vmin 60vmin 15vmin;
     grid-template-rows: 3vmin 15vmin 3vmin 15vmin 3vmin 9vmin 3vmin 15vmin 3vmin 15vmin 3vmin 3vmin;
-    margin: auto;
+    margin-top: 2vmin;
 }
     
 h1 {
@@ -53,24 +53,35 @@ h1 {
 }
 
 #buttons { 
-    display: grid;
+    display: flex;
     grid-column-start: 2;
     grid-row-start: 11;
     grid-template-columns: 2fr 2fr;
+    justify-content: space-evenly;  
+     
 }
 
-#hitbutton{
-    background-color:darkolivegreen;
+#hitButton{
     border-radius: 5px;
-    width: 50%;
+    width: 30%;
     justify-self: center;
+    color:rgb(221, 181, 117);
+    background-color: darkolivegreen;
+    border-radius: 1vmin;
+    border: .4vmin solid;
+    
 }
 
-#standbutton{
-    background-color:darkolivegreen;
+#standButton{
+    
     border-radius: 5px;
-    width: 50%;
+    width: 30%;
     justify-self: center;
+    color:rgb(221, 181, 117);
+    background-color: darkolivegreen;
+    border-radius: 1vmin;
+    border: .4vmin solid;
+    
 }
 
 #startbutton{
@@ -133,6 +144,15 @@ h1 {
     background-size: contain;
    
     border-radius: 5px;
+    transform: rotate(180deg);
+    position: absolute;
+    backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    margin-left: 5px;
+    margin-top: 5px;
+
+    
    
 }
 
@@ -149,7 +169,8 @@ h1 {
     transition: transform 1s;
     transform-style: preserve-3d;
     position: relative;
-    margin-bottom: 5px;
+  
+   
    
     
 }
@@ -157,19 +178,13 @@ h1 {
 .faceup {
     transform: rotateX(180deg);
     backface-visibility: hidden;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
-.card-back-side{
-    transform: rotate(180deg);
-    position: absolute;
-    backface-visibility: hidden;
-    top: 0;
-    left: 0;
-    margin-left: 5px;
-  
-   
+
     
-}
+
 
 #useddeck{
     border-radius: 5px;

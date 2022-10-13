@@ -74,24 +74,27 @@ betButton.addEventListener('click', betFunc)
     let cardsHtml = '';
     let cardsHtml1 = '';
     let cardsHtml2 = '';
+    let cardsHtml3 = '';
     
-
-      for (let i=0; i <1; i++){
-       
-        cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
+    if (winner){
+      for (let i =0; i < anyDeck.length; i++){
+      cardsHtml3 += `<div class="card ${anyDeck[i].face}"></div>`; 
+      container.innerHTML = cardsHtml3
+      }
+    } else {
+       for (let i=0; i <1; i++){
         cardsHtml1 += ` <div class="card ${anyDeck[i].face} faceup"></div>`; 
-       // cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
+        cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
         cardsHtml += `<div class = "flip-card"> ${cardsHtml1} </div>`;
-    }
-       container.innerHTML += cardsHtml
-
+  }
+        container.innerHTML += cardsHtml
     for (let i =1; i < anyDeck.length; i++){
         cardsHtml2 += `<div class="card ${anyDeck[i].face}"></div>`; 
     }
     container.innerHTML += cardsHtml2
 
   }
-
+  }
    
 
   function renderNewShuffledDeck(){
@@ -129,7 +132,7 @@ betButton.addEventListener('click', betFunc)
 
   function start(){
     
-    if (betAmount !== undefined && betAmount < pot && betAmount !== 0){
+    if (betAmount !== undefined && betAmount <= pot && betAmount !== 0){
       winner = null;
       playerHand = []
       dealerHand = []
@@ -139,7 +142,7 @@ betButton.addEventListener('click', betFunc)
       dealerHand[1] = shuffledDeck.shift();
       playerPoints = checkHandScore(playerHand);
       dealerPoints = checkHandScore(dealerHand);
-      wageamountEl.value = ''
+      
       //betButton.style.visibility = "hidden"
       winner = checkWinner()
       //hideHandIfWinner()
