@@ -37,7 +37,7 @@ body{ margin: 0;
     justify-self: center;
     align-self: center;
     border-radius: 35px;
-    border: 2vmin solid rgb(159, 103, 14);
+    border: 2vmin solid rgb(221, 181, 117);
     background-color: green;
     grid-column-start:2 ;
     grid-row-start: 2;
@@ -78,8 +78,16 @@ h1 {
     grid-row-start: 6;
     justify-self: center;
     align-self: center;
+    border-radius: 1vmin;
+    border: .4vmin solid;
+    color:rgb(221, 181, 117);
+    background-color: darkolivegreen;
+    height: 60%;
+    width: 14%;
+    
+}#startButton:hover {
+    color:rgb(78, 59, 28);
 }
-
 #playerHand{
     grid-column-start: 2;
     grid-row-start: 8;
@@ -99,11 +107,6 @@ h1 {
     justify-content: space-evenly;
 }
 
-#phand0, #phand1, #phand2, #phand3, #phand4 , #dhand0, #dhand1, #dhand2, #dhand3, #dhand4 {
-    width:9vmin;
-    height: 15vmin;
-}
- 
 #shuffleddeck{
     justify-self: center;
     align-self: center;
@@ -192,31 +195,48 @@ h1 {
     justify-self: center;
     align-self: center;
     margin-top: 3vmin; 
-    color: white;
+    color:rgb(221, 181, 117);;
 }
 
 #wageBank{
     display: flex;
     justify-self: center;
     align-self: center;
-    color: white;
+    color:rgb(221, 181, 117);
     font-size: 3vmin;
     font-weight: bold;
 }
 
 input[type='number']{
-    width: 11vmin;
+    width: 10vmin;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-self: center;
+    align-self: center;
     margin-top: 2vmin;
+    border-radius: 1vmin ;
+    border: .4vmin solid;
+    color:rgb(221, 181, 117);
+    background-color: darkolivegreen;
   
 }
-
+#bet{
+    width: 8vmin;
+    margin-top: 5px;
+    border-radius: 1vmin;
+    border: .4vmin solid;
+    color:rgb(221, 181, 117);
+    background-color: darkolivegreen;
+    
+    justify-self: center;
+    align-self: center;
+}
 
 #message {
     grid-column-start: 2;
     grid-row-start: 7;
     justify-self: center;
     align-self: center;
+    color:rgb(221, 181, 117);
+    margin-top: 6vmin;
+    margin-bottom: 8vmin;
 }

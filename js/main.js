@@ -23,6 +23,7 @@ const messageEl = document.getElementById('message')
 const betButton = document.getElementById('bet')
 const wageamountEl = document.getElementById('wageamount');
 const wageBankEl = document.getElementById('wageBank')
+
   /*----- event listeners -----*/
 startButton.addEventListener('click',start);
 hitButton.addEventListener('click',hitFunc)
@@ -91,22 +92,7 @@ betButton.addEventListener('click', betFunc)
 
   }
 
-    
-   /*  anyDeck.forEach(function(card){
-    cardsHtml1 = ` <div class="card ${card.face}"></div>`; 
-    //cardsHtml+= `<div class="flip-card-front">${flipCardFront}</div>`
-    cardsHtml2 = ` <div class="card-${card.backside}"></div>`;
-
-    cardsHtml += `<div class = "flip-card"> ${cardsHtml1} ${cardsHtml2}</div>`
-    
-    //container.innerHTML = cardsHtml;
-    });
-    container.innerHTML = cardsHtml;
-    //cardhtml1 += `<div class = "flip-card"> ${cardsHtml}</div>`
-
-   //container.innerHTML = cardhtml1;
-  }
-*/
+   
 
   function renderNewShuffledDeck(){
     shuffledDeck = buildShuffledDeck();
@@ -143,7 +129,7 @@ betButton.addEventListener('click', betFunc)
 
   function start(){
     
-    if (wageamountEl.value !== '' && wageamountEl.value < pot){
+    if (betAmount !== undefined && betAmount < pot && betAmount !== 0){
       winner = null;
       playerHand = []
       dealerHand = []
@@ -153,11 +139,12 @@ betButton.addEventListener('click', betFunc)
       dealerHand[1] = shuffledDeck.shift();
       playerPoints = checkHandScore(playerHand);
       dealerPoints = checkHandScore(dealerHand);
+      wageamountEl.value = ''
       //betButton.style.visibility = "hidden"
       winner = checkWinner()
       //hideHandIfWinner()
       render()
-  } else if (wageamountEl.value > pot && wageamountEl.value !== '') {
+  } else if (betAmount > pot && betAmount !== undefined) {
       messageEl.innerHTML = "not enough money!"
   } else {
       messageEl.innerHTML = "forgot to place bet!"
@@ -221,22 +208,27 @@ function standFunc(){
 function checkWinner(){
   if ( playerPoints  > 21 ){
     pot -= betAmount
-    wageBankEl.innerHTML = parseInt(pot)
+    wageBankEl.innerHTML = pot
+    betAmount = 0
     return "dealer"
   }  else if (dealerPoints > 21){
     pot += betAmount
     wageBankEl.innerHTML = pot
+    betAmount = 0
     return "player"
   } else if (playerPoints === 21 && dealerPoints === 21){
     pot -= betAmount 
+    betAmount = 0
     return "dealer"
   } else if ( playerPoints === 21){
     pot += betAmount
     wageBankEl.innerHTML = pot
+    betAmount = 0
     return "player"
   } else if ( dealerPoints === 21){
     pot -= betAmount
     wageBankEl.innerHTML = pot
+    betAmount = 0
     return "dealer"
   } 
 
@@ -246,23 +238,35 @@ function checkWinnerStand (){
   if (dealerPoints > playerPoints && dealerPoints < 21){
     pot -= betAmount
     wageBankEl.innerHTML = pot
+    betAmount = 0
     return "dealer"
   } else if (playerPoints > dealerPoints && dealerPoints < 21){
         pot += betAmount
         wageBankEl.innerHTML = pot
+        betAmount = 0
         return "player"
   }  else if (playerPoints === dealerPoints){
     pot -= betAmount 
     wageBankEl.innerHTML = pot
+    betAmount = 0
     return "dealer"
   }
 }
 
 function betFunc (){
   betAmount = parseFloat(wageamountEl.value);
-  messageEl.innerHTML = ""
-  //wageamountEl.value = ''
+  if ( betAmount <= 0){
+    messageEl.innerHTML = "At least 1 chip"
+  } else if ( betAmount > pot){
+    messageEl.innerHTML = "Not enough"
+  } else if (wageamountEl.value === ""){
+    messageEl.innerHTML = "place bet"
+  }
   
+  else {
+  messageEl.innerHTML = ""
+  
+  }
   }
 
 function renderMessage(){
@@ -270,9 +274,7 @@ function renderMessage(){
       messageEl.innerHTML = "You Won"
     } else if ( winner === "dealer"){
       messageEl.innerHTML = "Dealer Won"
-    } else if (winner === "tie") {
-      messageEl.innerHTML = "TIE"
-    } else {
+    }  else {
       messageEl.innerHTML = ""
     }
 }
