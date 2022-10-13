@@ -1,5 +1,25 @@
 
+@media (min-width: 300px) and (max-width:800px){
+    body{
+        background-color: red;
+        
+    }
+    .card {
+        width: 2.2em;
+        height: 3.5em;
 
+    }
+    #board{
+
+
+    }
+    #hitButton,#standButton{
+        width: 50%;
+        justify-self: center;
+    }
+
+
+}
 
 
 body{ margin: 0;
@@ -83,12 +103,12 @@ h1 {
 }
  
 #shuffleddeck{
+    justify-self: center;
+    align-self: center;
     border-radius: 5px;
     grid-column-start: 1;
     grid-row-start: 5;
     grid-row-end: 8;
-    justify-self: center;
-    align-self: center;
     background-image: url("../css/card-library/images/backs/red.svg");
     width: 4.0em;
     height: 5.5em; 
@@ -98,38 +118,44 @@ h1 {
 
 .card-back-side{
     background-image: url("../css/card-library/images/backs/red.svg");
-   
     width: 4.0em;
-    height: 5.7em;
+    height: 5.6em;
     background-color: #fff;
     border-radius: 0.20em;
     border: 1px solid #c3c3c3;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    position: relative;
+    border-radius: 5px;
+   
 }
 
 #playerHand:hover .flip-card{
     transform: rotateY(180deg)
 }
-#dealerHand:hover .flip-card{
-    transform: rotateY(180deg)
-}
+
+
 
 .flip-card {
-    position: relative;
+    
     display: flex;
     transition: transform 1s;
     transform-style: preserve-3d;
-    flex-direction: row;
-    justify-content: space-evenly;
-
+    
+    ;
+   
+    
 }
+
+
 
 .card-back-side{
     transform: rotateY(180deg);
     position: absolute;
     backface-visibility: hidden;
+   
+    
 }
 
 #useddeck{
@@ -174,6 +200,7 @@ input[type='number']{
     justify-content: center;
     align-items: center;
     margin-top: 2vmin;
+  
 }
 
 

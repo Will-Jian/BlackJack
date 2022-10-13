@@ -12,21 +12,24 @@ let winner;
 let dealerHand;
 let playerHand;
 let shuffledDeck; 
-
+let betAmount;
 
   /*----- cached elements */ 
 const startButton = document.getElementById('startbutton')
 const hitButton = document.getElementById('hitButton')
 const standButton = document.getElementById('standButton')
 const messageEl = document.getElementById('message')
+const betButton = document.getElementById('bet')
+const wageamountEl = document.getElementById('wageamount');
+const wageBankEl = document.getElementById('wageBank')
   /*----- event listeners -----*/
 startButton.addEventListener('click',start);
 hitButton.addEventListener('click',hitFunc)
 standButton.addEventListener('click',standFunc)
+betButton.addEventListener('click', betFunc)
 
   /*----- functions -----*/
   init()
-
 
 
   function init(){
@@ -47,7 +50,6 @@ standButton.addEventListener('click',standFunc)
     for (let i=0; i < suits.length; i++){     
       for (let j=0; j<rank.length; j++) {
         let card = {face: `${suits[i]}${rank[j]}`, value: Number(rank[j]) || (rank[j] === 'A' ? 11 : 10), backside: "back-side"}
-        console.log(card)
         originalDeck.push(card);  
       }
     }
@@ -72,8 +74,10 @@ standButton.addEventListener('click',standFunc)
     
 
       for (let i=0; i <1; i++){
-        cardsHtml1 += ` <div class="card ${anyDeck[i].face}"></div>`; 
         cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
+
+        cardsHtml1 += ` <div class="card ${anyDeck[i].face}"></div>`; 
+       // cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
         cardsHtml += `<div class = "flip-card"> ${cardsHtml1} </div>`;
     }
        container.innerHTML += cardsHtml
@@ -191,29 +195,30 @@ function standFunc(){
         else {
         winner = checkWinner()
       }
+      
       render()
   }
   
 
 function checkWinner(){
   if ( playerPoints  > 21 ){
-    pot = pot - (document.getElementById('wageamount').value)
-    document.getElementById("wageBank").innerHTML = pot
+    pot -= betAmount
+    wageBankEl.innerHTML = pot
     return "dealer"
   }  else if (dealerPoints > 21){
-    pot = pot += ((document.getElementById('wageamount').value)*2)
-    document.getElementById("wageBank").innerHTML = pot
+    pot += betAmount
+    wageBankEl.innerHTML = pot
     return "player"
   } else if (playerPoints === 21 && dealerPoints === 21){
-    pot = pot - 0 
-    return "tie"
+    pot -= betAmount 
+    return "dealer"
   } else if ( playerPoints === 21){
-    pot = pot += ((document.getElementById('wageamount').value)*2)
-    document.getElementById("wageBank").innerHTML = pot
+    pot += betAmount
+    wageBankEl.innerHTML = pot
     return "player"
   } else if ( dealerPoints === 21){
-    pot = pot - (document.getElementById('wageamount').value)
-    document.getElementById("wageBank").innerHTML = pot
+    pot -= betAmount
+    wageBankEl.innerHTML = pot
     return "dealer"
   } 
 
@@ -221,16 +226,26 @@ function checkWinner(){
 
 function checkWinnerStand (){
   if (dealerPoints > playerPoints && dealerPoints < 21){
-    pot = pot - (document.getElementById('wageamount').value)
-    document.getElementById("wageBank").innerHTML = pot
+    pot -= betAmount
+    wageBankEl.innerHTML = pot
     return "dealer"
   } else if (playerPoints > dealerPoints && dealerPoints < 21){
-        pot = pot += ((document.getElementById('wageamount').value)*2)
-        document.getElementById("wageBank").innerHTML = pot
+        pot += betAmount
+        wageBankEl.innerHTML = pot
         return "player"
-  }  
+  }  else if (playerPoints === dealerPoints){
+    pot -= betAmount 
+    wageBankEl.innerHTML = pot
+    return "dealer"
+  }
 }
 
+function betFunc (){
+  betAmount = parseInt(wageamountEl.value);
+  messageEl.innerHTML = ""
+  //wageamountEl.value = ''
+  
+  }
 
 function renderMessage(){
     if (winner === "player") {
