@@ -5,7 +5,7 @@
   
   
 
-  let pot = 1000
+
 
   /*----- state variables -----*/
 let winner;
@@ -13,6 +13,7 @@ let dealerHand;
 let playerHand;
 let shuffledDeck; 
 let betAmount;
+let pot;
 
   /*----- cached elements */ 
 const startButton = document.getElementById('startbutton')
@@ -33,11 +34,12 @@ betButton.addEventListener('click', betFunc)
 
 
   function init(){
+    pot = 1000
     startButton.style.visibility = "visible"
     hitButton.style.visibility = "hidden" 
     standButton.style.visibility = "hidden"  
 
-    document.getElementById("wageBank").innerHTML = pot
+    wageBankEl.innerHTML = pot
       dealerHand = []
       playerHand = []
       playerPoints = 0
@@ -138,7 +140,8 @@ betButton.addEventListener('click', betFunc)
 
 
   function start(){
-    if (document.getElementById('wageamount').value !== '' && document.getElementById('wageamount').value < pot){
+    betButton.style.visibility = "hidden"
+    if (wageamountEl.value !== '' && wageamountEl.value < pot){
       winner = null;
       playerHand = []
       dealerHand = []
@@ -150,7 +153,7 @@ betButton.addEventListener('click', betFunc)
       dealerPoints = checkHandScore(dealerHand);
       winner = checkWinner()
       render()
-  } else if (document.getElementById('wageamount').value > pot && document.getElementById('wageamount').value !== '') {
+  } else if (wageamountEl.value > pot && wageamountEl.value !== '') {
       messageEl.innerHTML = "not enough money!"
   } else {
       messageEl.innerHTML = "forgot to place bet!"
@@ -196,14 +199,16 @@ function standFunc(){
         winner = checkWinner()
       }
       
+     
       render()
   }
   
 
+
 function checkWinner(){
   if ( playerPoints  > 21 ){
     pot -= betAmount
-    wageBankEl.innerHTML = pot
+    wageBankEl.innerHTML = parseInt(pot)
     return "dealer"
   }  else if (dealerPoints > 21){
     pot += betAmount
@@ -241,7 +246,7 @@ function checkWinnerStand (){
 }
 
 function betFunc (){
-  betAmount = parseInt(wageamountEl.value);
+  betAmount = parseFloat(wageamountEl.value);
   messageEl.innerHTML = ""
   //wageamountEl.value = ''
   
