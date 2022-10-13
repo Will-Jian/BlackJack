@@ -9,15 +9,17 @@
         height: 3.5em;
 
     }
-    #board{
-
-
+    .flip-card{
+        width: 2.2em;
+        height: 3.5em;
     }
+   
     #hitButton,#standButton{
         width: 50%;
         justify-self: center;
     }
 
+ 
 
 }
 
@@ -126,7 +128,7 @@ h1 {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    position: relative;
+   
     border-radius: 5px;
    
 }
@@ -137,23 +139,31 @@ h1 {
 
 
 
+
 .flip-card {
     
     display: flex;
     transition: transform 1s;
     transform-style: preserve-3d;
-    
-    ;
+    position: relative;
+    margin-bottom: 5px;
    
     
 }
 
-
+.faceup {
+    transform: rotateX(180deg);
+    backface-visibility: hidden;
+}
 
 .card-back-side{
-    transform: rotateY(180deg);
+    transform: rotate(180deg);
     position: absolute;
     backface-visibility: hidden;
+    top: 0;
+    left: 0;
+    margin-left: 5px;
+  
    
     
 }

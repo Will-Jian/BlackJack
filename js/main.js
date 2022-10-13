@@ -76,9 +76,9 @@ betButton.addEventListener('click', betFunc)
     
 
       for (let i=0; i <1; i++){
+       
         cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
-
-        cardsHtml1 += ` <div class="card ${anyDeck[i].face}"></div>`; 
+        cardsHtml1 += ` <div class="card ${anyDeck[i].face} faceup"></div>`; 
        // cardsHtml1+= ` <div class="card-${anyDeck[i].backside}"></div>`;
         cardsHtml += `<div class = "flip-card"> ${cardsHtml1} </div>`;
     }
@@ -112,8 +112,10 @@ betButton.addEventListener('click', betFunc)
     shuffledDeck = buildShuffledDeck();
   }
   function reshuffleDeck(){
-    if (shuffledDeck = [])
-    shuffledDeck = buildShuffledDeck();
+    if (shuffledDeck = []){
+          shuffledDeck = buildShuffledDeck()
+    } else 
+    return
   }
     
   
@@ -140,7 +142,7 @@ betButton.addEventListener('click', betFunc)
 
 
   function start(){
-    betButton.style.visibility = "hidden"
+    
     if (wageamountEl.value !== '' && wageamountEl.value < pot){
       winner = null;
       playerHand = []
@@ -151,7 +153,9 @@ betButton.addEventListener('click', betFunc)
       dealerHand[1] = shuffledDeck.shift();
       playerPoints = checkHandScore(playerHand);
       dealerPoints = checkHandScore(dealerHand);
+      //betButton.style.visibility = "hidden"
       winner = checkWinner()
+      //hideHandIfWinner()
       render()
   } else if (wageamountEl.value > pot && wageamountEl.value !== '') {
       messageEl.innerHTML = "not enough money!"
@@ -160,10 +164,18 @@ betButton.addEventListener('click', betFunc)
   }
 
 }
+/*
+  function hideHandIfWinner(){
+    if (winner === 'dealer' || winner === 'player'){
+      playerHand = []
+      dealerHand = []
+      betButton.style.visibility = "visible"
+    } else 
+      return
+    
+  }
 
-  
-
-
+*/
 function checkHandScore(hand){
   let totalScore =0
   let totalAce =0
@@ -182,6 +194,7 @@ function hitFunc(){
   playerHand.push(shuffledDeck.shift())
   playerPoints = checkHandScore(playerHand);
   winner = checkWinner();
+  //hideHandIfWinner()
   render()
 }
 
@@ -198,7 +211,7 @@ function standFunc(){
         else {
         winner = checkWinner()
       }
-      
+      //hideHandIfWinner()
      
       render()
   }
@@ -268,6 +281,7 @@ function renderButtons() {
   winner ? startButton.style.visibility = "visible" : startButton.style.visibility = "hidden"
   winner ? hitButton.style.visibility = "hidden" : hitButton.style.visibility = "visible"
   winner ? standButton.style.visibility = "hidden" : standButton.style.visibility = "visible"
+  winner ? betButton.style.visibility = "visible" : betButton.style.visibility = "hidden"
 }
 
 
