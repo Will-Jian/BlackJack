@@ -18,9 +18,6 @@
         width: 50%;
         justify-self: center;
     }
-
- 
-
 }
 
 
@@ -42,7 +39,6 @@ body{ margin: 0;
     grid-column-start:2 ;
     grid-row-start: 2;
     grid-row-end: 3;
-
     grid-template-columns: 15vmin 60vmin 15vmin;
     grid-template-rows: 3vmin 15vmin 3vmin 15vmin 3vmin 9vmin 3vmin 15vmin 3vmin 15vmin 3vmin 3vmin;
     margin-top: 2vmin;
@@ -58,7 +54,6 @@ h1 {
     grid-row-start: 11;
     grid-template-columns: 2fr 2fr;
     justify-content: space-evenly;  
-     
 }
 
 #hitButton{
@@ -69,11 +64,9 @@ h1 {
     background-color: darkolivegreen;
     border-radius: 1vmin;
     border: .4vmin solid;
-    
 }
 
 #standButton{
-    
     border-radius: 5px;
     width: 30%;
     justify-self: center;
@@ -94,11 +87,13 @@ h1 {
     color:rgb(221, 181, 117);
     background-color: darkolivegreen;
     height: 60%;
-    width: 14%;
-    
-}#startButton:hover {
+    width: 14%;   
+}
+
+#startButton:hover {
     color:rgb(78, 59, 28);
 }
+
 #playerHand{
     grid-column-start: 2;
     grid-row-start: 8;
@@ -142,7 +137,6 @@ h1 {
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-   
     border-radius: 5px;
     transform: rotate(180deg);
     position: absolute;
@@ -150,29 +144,18 @@ h1 {
     top: 0;
     left: 0;
     margin-left: 5px;
-    margin-top: 5px;
-
-    
-   
+    margin-top: 5px; 
 }
 
 #playerHand:hover .flip-card{
     transform: rotateY(180deg)
 }
 
-
-
-
 .flip-card {
-    
     display: flex;
     transition: transform 1s;
     transform-style: preserve-3d;
     position: relative;
-  
-   
-   
-    
 }
 
 .faceup {
@@ -181,10 +164,6 @@ h1 {
     margin-bottom: 10px;
     padding-bottom: 10px;
 }
-
-
-    
-
 
 #useddeck{
     border-radius: 5px;
@@ -234,6 +213,7 @@ input[type='number']{
     background-color: darkolivegreen;
   
 }
+
 #bet{
     width: 8vmin;
     margin-top: 5px;
